@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "MainViewController.h"
+#import "DiscoverViewController.h"
+#import "MineViewController.h"
 
 @interface AppDelegate ()
 
@@ -18,6 +21,39 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    //UITabBarController
+    UITabBarController *tabBarVC = [[UITabBarController alloc] init];
+    //创建被tabBarVC管理的视图控制器
+    //主页
+    //欢乐周末
+    UIStoryboard *mainStroyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *mainNav = mainStroyBoard.instantiateInitialViewController;
+    mainNav.tabBarItem.image = [UIImage imageNamed:@"ft_home_normal_ic"];
+    UIImage *selectedImage = [UIImage imageNamed:@"ft_home_selected_ic"];
+    mainNav.tabBarItem.selectedImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    //调整tabBar显示位置 (上,左,下,右)的顺序设置
+    mainNav.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    //发现
+    UIStoryboard *discoverStroyBoard = [UIStoryboard storyboardWithName:@"Discover" bundle:nil];
+    UINavigationController *discoverNav = discoverStroyBoard.instantiateInitialViewController;
+    discoverNav.tabBarItem.image = [UIImage imageNamed:@"ft_found_normal_ic"];
+    UIImage *discoverImage = [UIImage imageNamed:@"ft_found_selected_ic"];
+    discoverNav.tabBarItem.selectedImage = [discoverImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    discoverNav.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    //我的
+    UIStoryboard *mineStroyBoard = [UIStoryboard storyboardWithName:@"Mine" bundle:nil];
+    UINavigationController *mineNav = mineStroyBoard.instantiateInitialViewController;
+    mineNav.tabBarItem.image = [UIImage imageNamed:@"ft_person_normal_ic"];
+    //选中的图片效果
+    UIImage *mineImage = [UIImage imageNamed:@"ft_person_selected_ic"];
+    mineNav.tabBarItem.selectedImage = [mineImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    mineNav.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    
+    //添加被管理的视图控制器
+    tabBarVC.viewControllers = @[mainNav, discoverNav, mineNav];
+    tabBarVC.tabBar.barTintColor = [UIColor whiteColor];
+    self.window.rootViewController = tabBarVC;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
