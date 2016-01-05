@@ -14,7 +14,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hsJ-jh-viv"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SUi-5O-AOE">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="0.42966642129999999" blue="0.23581978100000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -31,7 +31,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ztd-dY-eff" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eFT-Rd-EXT">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="eFT-Rd-EXT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
