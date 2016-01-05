@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "MainTableViewCell.h"
 #import "MainModel.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import <AFNetworking/AFHTTPSessionManager.h>
 
 @interface MainViewController ()<UITableViewDataSource, UITableViewDelegate>
@@ -19,6 +20,8 @@
 @property(nonatomic, strong) NSMutableArray *activityArray;
 //推荐专题数据
 @property(nonatomic, strong) NSMutableArray *themeArray;
+@property(nonatomic, strong) NSMutableArray *adArray;
+
 @end
 
 @implementation MainViewController
@@ -47,7 +50,7 @@
 }
 #pragma mark -------  UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return self.listArray.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
@@ -72,16 +75,21 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 203;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-//    if (section == 0) {
-//        return 343;
-//    }
-//    return 0;
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 20;
+}
 //自定义分区头部
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-//    return nil;
-//}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView *view = [[UIView alloc] init];
+    UIImageView *sectionView = [[UIImageView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width / 2 - 160, 5, 320, 16)];
+    if (section == 0) {
+        sectionView.image = [UIImage imageNamed:@"home_recommed_ac"];
+    } else {
+        sectionView.image = [UIImage imageNamed:@"home_recommd_ac"];
+    }
+    [view addSubview:sectionView];
+    return view;
+}
 #pragma mark  ----------CityCustom
 //选择城市
 - (void)selectCityAction:(UIBarButtonItem *)btn{
@@ -92,8 +100,42 @@
 //自定义tableView头部
 - (void)configTableViewHeadView{
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 343)];
-    view.backgroundColor = [UIColor redColor];
     self.TableView.tableHeaderView = view;
+    
+    UIScrollView *carouseView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 186)];
+    carouseView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * self.adArray.count, 186);
+    for (int i = 0; i < self.adArray.count; i++) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width * i, 0, [UIScreen mainScreen].bounds.size.width, 186)];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:self.adArray[i]] placeholderImage:nil];
+        [carouseView addSubview:imageView];
+    }
+    [view addSubview:carouseView];
+    
+    //按钮
+    for (int i = 0; i < 4; i++) {
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(i * [UIScreen mainScreen].bounds.size.width / 4, 186, [UIScreen mainScreen].bounds.size.width / 4, [UIScreen mainScreen].bounds.size.width / 4);
+        NSString *imageStr = [NSString stringWithFormat:@"home_icon_%d", i + 1];
+        [btn setImage:[UIImage imageNamed:imageStr] forState:UIControlStateNormal];
+        btn.tag = 100 + i;
+        [btn addTarget:self action:@selector(mainActivityButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:btn];
+    }
+    //精选活动&专门专题
+    UIButton *activityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    activityBtn.frame = CGRectMake(0, 186, [UIScreen mainScreen].bounds.size.width / 2, 343 - 186 + [UIScreen mainScreen].bounds.size.width / 4);
+    [activityBtn setImage:[UIImage imageNamed:@"home_huodong@2x(1)"] forState:UIControlStateNormal];
+    activityBtn.tag = 104;
+    [activityBtn addTarget:self action:@selector(mainActivityButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:activityBtn];
+    
+    UIButton *themeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    themeBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width / 2, 186, [UIScreen mainScreen].bounds.size.width / 2, 343 - 186 + [UIScreen mainScreen].bounds.size.width / 4);
+    [themeBtn setImage:[UIImage imageNamed:@"home_zhuanti@2x(1)"] forState:UIControlStateNormal];
+    themeBtn.tag = 105;
+    [themeBtn addTarget:self action:@selector(mainActivityButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:themeBtn];}
+- (void)mainActivityButtonAction:(UIButton *)btn{
 }
 - (void)request{
     NSString *urlString = @"http://e.kumi.cn/app/v1.3/index.php?_s_=02a411494fa910f5177d82a6b0a63788&_t_=1451307342&channelid=appstore&cityid=1&lat=34.62172291944134&limit=30&lng=112.4149512442411&page=1";
@@ -127,8 +169,13 @@
             [self.TableView reloadData];
             //广告
             NSArray *adDataArray = dic[@"adData"];
-            NSString *cityName = dic[@"cityname"];
+            for (NSDictionary *dic in adDataArray) {
+                [self.adArray addObject:dic[@"url"]];
+            }
+            //拿到数据之后重新刷新headView
+            [self configTableViewHeadView];
             //以请求回来的城市作为导航栏按钮标题
+            NSString *cityName = dic[@"cityname"];
             self.navigationItem.leftBarButtonItem.title = cityName;
         } else {
         }
@@ -157,6 +204,12 @@
     }
     return _themeArray;
     
+}
+- (NSMutableArray *)adArray{
+    if (_adArray == nil) {
+        self.adArray = [NSMutableArray new];
+    }
+    return _adArray;
 }
 
 - (void)didReceiveMemoryWarning {

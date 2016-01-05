@@ -29,7 +29,8 @@
 - (void)setModel:(MainModel *)model{
     [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:model.image_big] placeholderImage:nil];
     self.activityNameLabel.text = model.title;
-    self.activityPriceLabel.text = model.price;
+    self.activityNameLabel.textAlignment = NSTextAlignmentCenter
+    ;    self.activityPriceLabel.text = model.price;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
