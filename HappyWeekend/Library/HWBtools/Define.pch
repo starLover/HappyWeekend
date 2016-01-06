@@ -1,0 +1,26 @@
+//
+//  Define.pch
+//  HappyWeekend
+//
+//  Created by wanghongxiao on 16/1/6.
+//  Copyright © 2016年 聂欣欣. All rights reserved.
+//
+
+#ifndef Define_pch
+#define Define_pch
+//屏幕宽高
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenHieght [UIScreen mainScreen].bounds.size.height
+//网址字符串
+#import "HWDefine.h"
+#import "UIViewController+Common.h"
+
+#ifdef DEBUG
+#	define NXXLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#else
+#	define NXXLog(...)
+#endif
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* Define_pch */

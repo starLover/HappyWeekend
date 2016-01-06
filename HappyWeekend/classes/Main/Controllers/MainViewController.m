@@ -9,10 +9,17 @@
 #import "MainViewController.h"
 #import "MainTableViewCell.h"
 #import "MainModel.h"
+#import "SearchViewController.h"
+#import "SelectCityViewController.h"
+#import "ThemeViewController.h"
+#import "ClassifyViewController.h"
+#import "ActivityDetailViewController.h"
+#import "GoodViewController.h"
+#import "HotViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <AFNetworking/AFHTTPSessionManager.h>
 
-@interface MainViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *TableView;
 //全部列表数据
 @property(nonatomic, strong) NSMutableArray *listArray;
@@ -21,7 +28,12 @@
 //推荐专题数据
 @property(nonatomic, strong) NSMutableArray *themeArray;
 @property(nonatomic, strong) NSMutableArray *adArray;
-
+@property(nonatomic, strong) UIScrollView *carouseView;
+@property(nonatomic, strong) UIPageControl *pageControl;
+@property(nonatomic, strong) UIButton *activityBtn;
+@property(nonatomic, strong) UIButton *themeBtn;
+//定时器用于图片滚动播放
+@property(nonatomic, strong) NSTimer *timer;
 @end
 
 @implementation MainViewController
@@ -47,6 +59,8 @@
     [self configTableViewHeadView];
     //网络请求
     [self request];
+    //启动定时器
+    [self startTimer];
 }
 #pragma mark -------  UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -81,40 +95,62 @@
 //自定义分区头部
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView *view = [[UIView alloc] init];
-    UIImageView *sectionView = [[UIImageView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width / 2 - 160, 5, 320, 16)];
+    UIImageView *sectionView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth / 2 - 160, 5, 320, 16)];
     if (section == 0) {
         sectionView.image = [UIImage imageNamed:@"home_recommed_ac"];
     } else {
-        sectionView.image = [UIImage imageNamed:@"home_recommd_ac"];
+        sectionView.image = [UIImage imageNamed:@"home_recommd_rc"];
     }
     [view addSubview:sectionView];
     return view;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section == 0) {
+        ActivityDetailViewController *activityVC = [[ActivityDetailViewController alloc] init];
+        [self.navigationController pushViewController:activityVC animated:YES];
+    } else {
+        ThemeViewController *themrVC = [[ThemeViewController alloc] init];
+        [self.navigationController pushViewController:themrVC animated:YES];
+    }
+}
+
 #pragma mark  ----------CityCustom
 //选择城市
 - (void)selectCityAction:(UIBarButtonItem *)btn{
+    SelectCityViewController *selectCityVC = [[SelectCityViewController alloc] init];
+    [self.navigationController presentViewController:selectCityVC animated:YES completion:nil];
 }
 //搜索关键字
 - (void)searchCityAction:(UIBarButtonItem *)btn{
+    SearchViewController *searchVC = [[SearchViewController alloc] init];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 //自定义tableView头部
 - (void)configTableViewHeadView{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 343)];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 343)];
     self.TableView.tableHeaderView = view;
-    
-    UIScrollView *carouseView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 186)];
-    carouseView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * self.adArray.count, 186);
+    [view addSubview:self.carouseView];
     for (int i = 0; i < self.adArray.count; i++) {
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width * i, 0, [UIScreen mainScreen].bounds.size.width, 186)];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:self.adArray[i]] placeholderImage:nil];
-        [carouseView addSubview:imageView];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(kScreenWidth * i, 0, kScreenWidth, 186)];
+        [imageView sd_setImageWithURL:[NSURL URLWithString:self.adArray[i][@"url"]] placeholderImage:nil];
+        imageView.userInteractionEnabled = YES;
+        [self.carouseView addSubview:imageView];
+        
+        //
+        UIButton *touchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        touchBtn.frame = imageView.frame;
+        touchBtn.tag = 100 + i;
+        [touchBtn addTarget:self action:@selector(touchAdvertiseMent:) forControlEvents:UIControlEventTouchUpInside];
+        [self.carouseView addSubview:touchBtn];
     }
-    [view addSubview:carouseView];
+    self.pageControl.numberOfPages = self.adArray.count;
+    [view addSubview:self.pageControl];
+  
     
     //按钮
     for (int i = 0; i < 4; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectMake(i * [UIScreen mainScreen].bounds.size.width / 4, 186, [UIScreen mainScreen].bounds.size.width / 4, [UIScreen mainScreen].bounds.size.width / 4);
+        btn.frame = CGRectMake(i * kScreenWidth / 4, 186, kScreenWidth / 4, kScreenWidth / 4);
         NSString *imageStr = [NSString stringWithFormat:@"home_icon_%d", i + 1];
         [btn setImage:[UIImage imageNamed:imageStr] forState:UIControlStateNormal];
         btn.tag = 100 + i;
@@ -122,29 +158,18 @@
         [view addSubview:btn];
     }
     //精选活动&专门专题
-    UIButton *activityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    activityBtn.frame = CGRectMake(0, 186, [UIScreen mainScreen].bounds.size.width / 2, 343 - 186 + [UIScreen mainScreen].bounds.size.width / 4);
-    [activityBtn setImage:[UIImage imageNamed:@"home_huodong@2x(1)"] forState:UIControlStateNormal];
-    activityBtn.tag = 104;
-    [activityBtn addTarget:self action:@selector(mainActivityButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:activityBtn];
-    
-    UIButton *themeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    themeBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width / 2, 186, [UIScreen mainScreen].bounds.size.width / 2, 343 - 186 + [UIScreen mainScreen].bounds.size.width / 4);
-    [themeBtn setImage:[UIImage imageNamed:@"home_zhuanti@2x(1)"] forState:UIControlStateNormal];
-    themeBtn.tag = 105;
-    [themeBtn addTarget:self action:@selector(mainActivityButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:themeBtn];}
-- (void)mainActivityButtonAction:(UIButton *)btn{
+    [view addSubview:self.activityBtn];
+    [view addSubview:self.themeBtn];
 }
+
 - (void)request{
-    NSString *urlString = @"http://e.kumi.cn/app/v1.3/index.php?_s_=02a411494fa910f5177d82a6b0a63788&_t_=1451307342&channelid=appstore&cityid=1&lat=34.62172291944134&limit=30&lng=112.4149512442411&page=1";
+    NSString *urlString = kMainDatalist;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
     [manager GET:urlString parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-        NSLog(@"%lld", downloadProgress.totalUnitCount);
+        NXXLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@", responseObject);
+//        NXXLog(@"%@", responseObject);
         NSDictionary *resultDic = responseObject;
         NSString *status = resultDic[@"status"];
         NSInteger code = [resultDic[@"code"] integerValue];
@@ -160,7 +185,6 @@
             //推荐专题
             NSArray *rcDataArray = dic[@"rcData"];
             for (NSDictionary *dic in rcDataArray) {
-                
                 MainModel *model = [MainModel getDictionary:dic];
                 [self.themeArray addObject:model];
             }
@@ -170,7 +194,8 @@
             //广告
             NSArray *adDataArray = dic[@"adData"];
             for (NSDictionary *dic in adDataArray) {
-                [self.adArray addObject:dic[@"url"]];
+                NSDictionary *dict = @{@"url" : dic[@"url"], @"type" : dic[@"type"], @"id" : dic[@"id"]};
+                [self.adArray addObject:dict];
             }
             //拿到数据之后重新刷新headView
             [self configTableViewHeadView];
@@ -180,8 +205,69 @@
         } else {
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@", error);
+        NXXLog(@"%@", error);
     }];
+}
+#pragma mark --------   轮播图
+//启动定时器
+- (void)startTimer{
+    //防止定时器重复创建
+    if (self.timer != nil) {
+        return;
+    }
+    self.timer = [NSTimer timerWithTimeInterval:2.0 target:self selector:@selector(rollAnimation) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+}
+//每2秒执行一次,图片自动轮播
+- (void)rollAnimation{
+    //把page当前页加1
+    NSInteger page = self.pageControl.currentPage;
+    if (page == self.adArray.count - 1) {
+        page = -1;
+    }
+    page++;
+    self.pageControl.currentPage = page;
+    //计算出scrollView应该滚动的x轴坐标
+    CGFloat offsetX = page * kScreenWidth;
+    [self.carouseView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+}
+//当手动滑动scrollView的时候,定时器依然在计算时间,可能我们刚刚滑动到下一页,定时器时间刚好有触发,导致在当前页停留的时间不够2秒
+//解决方案  在scrollView开始移动的时候结束定时器
+//在scrollView移动完毕的时候再启动定时器
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    //停止定时器
+    [_timer invalidate], _timer = nil;//停止定时器后并置为nil,重新启动定时器才能保证正常执行
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    [self startTimer];
+}
+//分类列表
+- (void)mainActivityButtonAction:(UIButton *)btn{
+    ClassifyViewController *classify = [[ClassifyViewController alloc] init];
+    [self.navigationController pushViewController:classify animated:YES];
+}
+//精选活动
+- (void)goodActivityButton{
+    GoodViewController *goodVC = [[GoodViewController alloc] init];
+    [self.navigationController pushViewController:goodVC animated:YES];
+}
+//热门专题
+- (void)hotActivityButton{
+    HotViewController *hotVC = [[HotViewController alloc] init];
+    [self.navigationController pushViewController:hotVC animated:YES];
+}
+//点击广告
+- (void)touchAdvertiseMent:(UIButton *)adButton{
+    //从数组中的字典里取出type类型
+    NSString *type = self.adArray[adButton.tag - 100][@"type"];
+    if ([type integerValue] == 1) {
+        ActivityDetailViewController *activityVC = [[ActivityDetailViewController alloc] init];
+        activityVC.activityId = self.adArray[adButton.tag - 100][@"id"];
+        [self.navigationController pushViewController:activityVC animated:YES];
+    } else {
+        HotViewController *hotVC = [[HotViewController alloc] init];
+        [self.navigationController pushViewController:hotVC animated:YES];
+    }
 }
 
 #pragma mark   ---------  ArrayLoading
@@ -210,6 +296,71 @@
         self.adArray = [NSMutableArray new];
     }
     return _adArray;
+}
+- (UIScrollView *)carouseView{
+    if (_carouseView == nil) {
+        //添加轮播图
+        self.carouseView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 186)];
+        self.carouseView.contentSize = CGSizeMake(kScreenWidth * self.adArray.count, 186);
+        //整平滑动
+        self.carouseView.pagingEnabled = YES;
+        //到边界是否能继续滑动
+        self.carouseView.bounces = NO;
+        //不显示水平方向滚动条
+        self.carouseView.showsHorizontalScrollIndicator = NO;
+        self.carouseView.delegate = self;
+    }
+    return _carouseView;
+}
+- (UIButton *)themeBtn{
+    if (_themeBtn == nil) {
+        self.themeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.themeBtn.frame = CGRectMake(kScreenWidth / 2, 186, kScreenWidth / 2, 343 - 186 + kScreenWidth / 4);
+        [self.themeBtn setImage:[UIImage imageNamed:@"home_zhuanti@2x(1)"] forState:UIControlStateNormal];
+        self.themeBtn.tag = 105;
+        [self.themeBtn addTarget:self action:@selector(hotActivityButton) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _themeBtn;
+}
+- (UIButton *)activityBtn{
+    if (_activityBtn == nil) {
+        self.activityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.activityBtn.frame = CGRectMake(0, 186, kScreenWidth / 2, 343 - 186 + kScreenWidth / 4);
+        [self.activityBtn setImage:[UIImage imageNamed:@"home_huodong@2x(1)"] forState:UIControlStateNormal];
+        self.activityBtn.tag = 104;
+        [self.activityBtn addTarget:self action:@selector(goodActivityButton) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _activityBtn;
+}
+- (UIPageControl *)pageControl{
+    if (_pageControl == nil) {
+        //创建小圆点
+        self.pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 186 - 30, kScreenWidth, 30)];
+        self.pageControl.currentPageIndicatorTintColor = [UIColor cyanColor];
+        [self.pageControl addTarget:self action:@selector(pageSelectAction:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _pageControl;
+}
+
+#pragma mark  -------  首页轮播图
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    //第一步：获取scrollView页面的宽度
+    CGFloat pageWidth = self.carouseView.frame.size.width;
+    //第二步：获取scrollView停止时的偏移量
+    //contentOffset是当前scrollView距离原点偏移的位置
+    CGPoint offset = scrollView.contentOffset;
+    //第三步：通过偏移量和页面宽度计算出当前页数
+    NSInteger pageNumber = offset.x / pageWidth;
+    self.pageControl.currentPage = pageNumber;
+}
+
+- (void)pageSelectAction:(UIPageControl *)pageControl{
+    //第一步：获取pageControl当前页
+    NSInteger pageNumber = self.pageControl.currentPage;
+    //第二步：获取页面的宽度
+    CGFloat pageWidth = self.carouseView.frame.size.width;
+    //第三步：让scrollView滚动到第几页
+    self.carouseView.contentOffset = CGPointMake(pageNumber * pageWidth, 0);
 }
 
 - (void)didReceiveMemoryWarning {

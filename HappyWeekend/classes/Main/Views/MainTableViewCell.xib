@@ -23,10 +23,6 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cjt-2k-mf2">
-                        <rect key="frame" x="278" y="170" width="49" height="24"/>
-                        <state key="normal" title="Button"/>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.34999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1225456465899" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIZ-dg-h6d">
                         <rect key="frame" x="0.0" y="136" width="375" height="29"/>
                         <color key="backgroundColor" red="0.14511718749999999" green="0.039285281560000003" blue="0.067508927319999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -34,6 +30,12 @@
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cjt-2k-mf2">
+                        <rect key="frame" x="265" y="171" width="102" height="22"/>
+                        <state key="normal" title="688km" image="pos">
+                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
             </tableViewCellContentView>
             <connections>
@@ -42,7 +44,10 @@
                 <outlet property="activityNameLabel" destination="SIZ-dg-h6d" id="fPO-tv-rq2"/>
                 <outlet property="activityPriceLabel" destination="Vcx-kO-2wz" id="nFV-F2-3KA"/>
             </connections>
-            <point key="canvasLocation" x="368.5" y="379.5"/>
+            <point key="canvasLocation" x="610.5" y="460.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="pos" width="12" height="15"/>
+    </resources>
 </document>

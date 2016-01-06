@@ -30,7 +30,14 @@
     [self.activityImageView sd_setImageWithURL:[NSURL URLWithString:model.image_big] placeholderImage:nil];
     self.activityNameLabel.text = model.title;
     self.activityNameLabel.textAlignment = NSTextAlignmentCenter
-    ;    self.activityPriceLabel.text = model.price;
+    ;
+    self.activityPriceLabel.text = model.price;
+    if ([model.type integerValue] == RecomendTypeActivity) {
+        self.activityDistaneBtn.hidden = NO;
+    } else {
+        self.activityDistaneBtn.hidden = YES;
+    }
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
