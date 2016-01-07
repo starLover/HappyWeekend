@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0101EE891C3E110E00DFB061 /* ActivityDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0101EE881C3E110E00DFB061 /* ActivityDetailView.m */; };
 		01557ECD1C3A277B00068631 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01557ECC1C3A277B00068631 /* main.m */; };
 		01557ED01C3A277B00068631 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01557ECF1C3A277B00068631 /* AppDelegate.m */; };
 		01557ED21C3A277B00068631 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01557ED11C3A277B00068631 /* Assets.xcassets */; };
@@ -34,6 +35,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0101EE871C3E110E00DFB061 /* ActivityDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailView.h; sourceTree = "<group>"; };
+		0101EE881C3E110E00DFB061 /* ActivityDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailView.m; sourceTree = "<group>"; };
 		01557EC81C3A277B00068631 /* HappyWeekend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyWeekend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01557ECC1C3A277B00068631 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		01557ECE1C3A277B00068631 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -231,6 +234,8 @@
 				01557F121C3A765F00068631 /* MainTableViewCell.h */,
 				01557F131C3A765F00068631 /* MainTableViewCell.m */,
 				01557F141C3A765F00068631 /* MainTableViewCell.xib */,
+				0101EE871C3E110E00DFB061 /* ActivityDetailView.h */,
+				0101EE881C3E110E00DFB061 /* ActivityDetailView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -447,6 +452,7 @@
 				01F4611B1C3CBF4500C34772 /* ThemeViewController.m in Sources */,
 				01F461241C3CC07B00C34772 /* HotViewController.m in Sources */,
 				01557ECD1C3A277B00068631 /* main.m in Sources */,
+				0101EE891C3E110E00DFB061 /* ActivityDetailView.m in Sources */,
 				01F461121C3CBC1500C34772 /* SelectCityViewController.m in Sources */,
 				01F461211C3CC07000C34772 /* GoodViewController.m in Sources */,
 				01557EFD1C3A4E5200068631 /* MainViewController.m in Sources */,

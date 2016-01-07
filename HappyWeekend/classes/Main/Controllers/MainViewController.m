@@ -157,11 +157,11 @@
         [btn addTarget:self action:@selector(mainActivityButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:btn];
     }
-    //精选活动&专门专题
+    //精选活动&热门专题
     [view addSubview:self.activityBtn];
     [view addSubview:self.themeBtn];
 }
-
+#pragma mark     -------网络请求
 - (void)request{
     NSString *urlString = kMainDatalist;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -221,11 +221,7 @@
 //每2秒执行一次,图片自动轮播
 - (void)rollAnimation{
     //把page当前页加1
-    NSInteger page = self.pageControl.currentPage;
-    if (page == self.adArray.count - 1) {
-        page = -1;
-    }
-    page++;
+    NSInteger page = (self.pageControl.currentPage + 1) % self.adArray.count;
     self.pageControl.currentPage = page;
     //计算出scrollView应该滚动的x轴坐标
     CGFloat offsetX = page * kScreenWidth;
@@ -261,7 +257,9 @@
     //从数组中的字典里取出type类型
     NSString *type = self.adArray[adButton.tag - 100][@"type"];
     if ([type integerValue] == 1) {
-        ActivityDetailViewController *activityVC = [[ActivityDetailViewController alloc] init];
+        UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        ActivityDetailViewController *activityVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"activityDetail"];
+        
         activityVC.activityId = self.adArray[adButton.tag - 100][@"id"];
         [self.navigationController pushViewController:activityVC animated:YES];
     } else {

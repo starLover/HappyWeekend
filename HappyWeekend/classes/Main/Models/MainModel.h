@@ -21,7 +21,7 @@ typedef enum {
 @property(nonatomic, assign) CGFloat lat;         //经纬度
 @property(nonatomic, assign) CGFloat lng;         //经纬度
 @property(nonatomic, copy) NSString *address;     //地点
-@property(nonatomic, copy) NSString *counts;       //总数
+@property(nonatomic, copy) NSString *counts;      //总数
 @property(nonatomic, copy) NSString *startTime;   //开始时间
 @property(nonatomic, copy) NSString *endTime;     //结束时间
 @property(nonatomic, copy) NSString *activityId;  //活动id
