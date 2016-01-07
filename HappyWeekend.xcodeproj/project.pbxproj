@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0101EE891C3E110E00DFB061 /* ActivityDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0101EE881C3E110E00DFB061 /* ActivityDetailView.m */; };
+		0101EE8C1C3E4C4400DFB061 /* HWTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 0101EE8B1C3E4C4400DFB061 /* HWTools.m */; };
+		0101EE8F1C3E5B1500DFB061 /* UIView+UIViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0101EE8E1C3E5B1500DFB061 /* UIView+UIViewExtension.m */; };
 		01557ECD1C3A277B00068631 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01557ECC1C3A277B00068631 /* main.m */; };
 		01557ED01C3A277B00068631 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01557ECF1C3A277B00068631 /* AppDelegate.m */; };
 		01557ED21C3A277B00068631 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01557ED11C3A277B00068631 /* Assets.xcassets */; };
@@ -37,6 +39,10 @@
 /* Begin PBXFileReference section */
 		0101EE871C3E110E00DFB061 /* ActivityDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailView.h; sourceTree = "<group>"; };
 		0101EE881C3E110E00DFB061 /* ActivityDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailView.m; sourceTree = "<group>"; };
+		0101EE8A1C3E4C4400DFB061 /* HWTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HWTools.h; sourceTree = "<group>"; };
+		0101EE8B1C3E4C4400DFB061 /* HWTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HWTools.m; sourceTree = "<group>"; };
+		0101EE8D1C3E5B1500DFB061 /* UIView+UIViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIViewExtension.h"; sourceTree = "<group>"; };
+		0101EE8E1C3E5B1500DFB061 /* UIView+UIViewExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIViewExtension.m"; sourceTree = "<group>"; };
 		01557EC81C3A277B00068631 /* HappyWeekend.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyWeekend.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01557ECC1C3A277B00068631 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		01557ECE1C3A277B00068631 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -212,6 +218,8 @@
 				01F461231C3CC07B00C34772 /* HotViewController.m */,
 				01FD3C5A1C3D206B0094BA53 /* UIViewController+Common.h */,
 				01FD3C5B1C3D206B0094BA53 /* UIViewController+Common.m */,
+				0101EE8D1C3E5B1500DFB061 /* UIView+UIViewExtension.h */,
+				0101EE8E1C3E5B1500DFB061 /* UIView+UIViewExtension.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -295,6 +303,8 @@
 			children = (
 				01F4610E1C3CAF3200C34772 /* Define.pch */,
 				01F4610F1C3CB30700C34772 /* HWDefine.h */,
+				0101EE8A1C3E4C4400DFB061 /* HWTools.h */,
+				0101EE8B1C3E4C4400DFB061 /* HWTools.m */,
 			);
 			path = HWBtools;
 			sourceTree = "<group>";
@@ -442,6 +452,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0101EE8C1C3E4C4400DFB061 /* HWTools.m in Sources */,
 				01F4611E1C3CBFF400C34772 /* ClassifyViewController.m in Sources */,
 				01557F151C3A765F00068631 /* MainTableViewCell.m in Sources */,
 				01557ED01C3A277B00068631 /* AppDelegate.m in Sources */,
@@ -450,6 +461,7 @@
 				01F461181C3CBE7300C34772 /* ActivityDetailViewController.m in Sources */,
 				01F461151C3CBD9300C34772 /* SearchViewController.m in Sources */,
 				01F4611B1C3CBF4500C34772 /* ThemeViewController.m in Sources */,
+				0101EE8F1C3E5B1500DFB061 /* UIView+UIViewExtension.m in Sources */,
 				01F461241C3CC07B00C34772 /* HotViewController.m in Sources */,
 				01557ECD1C3A277B00068631 /* main.m in Sources */,
 				0101EE891C3E110E00DFB061 /* ActivityDetailView.m in Sources */,

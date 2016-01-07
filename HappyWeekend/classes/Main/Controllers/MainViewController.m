@@ -106,7 +106,11 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        ActivityDetailViewController *activityVC = [[ActivityDetailViewController alloc] init];
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        ActivityDetailViewController *activityVC = [storyBoard instantiateViewControllerWithIdentifier:@"activityDetail"];
+        MainModel *mainModel = self.listArray[indexPath.section][indexPath.row];
+        activityVC.activityId = mainModel.activityId;
         [self.navigationController pushViewController:activityVC animated:YES];
     } else {
         ThemeViewController *themrVC = [[ThemeViewController alloc] init];
@@ -167,7 +171,7 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
     [manager GET:urlString parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-        NXXLog(@"%lld", downloadProgress.totalUnitCount);
+//        NXXLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //        NXXLog(@"%@", responseObject);
         NSDictionary *resultDic = responseObject;
