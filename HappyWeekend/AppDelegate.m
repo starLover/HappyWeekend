@@ -22,7 +22,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     //UITabBarController
-    UITabBarController *tabBarVC = [[UITabBarController alloc] init];
+    self.tabBarController = [[UITabBarController alloc] init];
     //创建被tabBarVC管理的视图控制器
     //主页
     //欢乐周末
@@ -50,9 +50,9 @@
     mineNav.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
     
     //添加被管理的视图控制器
-    tabBarVC.viewControllers = @[mainNav, discoverNav, mineNav];
-    tabBarVC.tabBar.barTintColor = [UIColor whiteColor];
-    self.window.rootViewController = tabBarVC;
+    self.tabBarController.viewControllers = @[mainNav, discoverNav, mineNav];
+    self.tabBarController.tabBar.barTintColor = [UIColor whiteColor];
+    self.window.rootViewController = self.tabBarController;
     
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

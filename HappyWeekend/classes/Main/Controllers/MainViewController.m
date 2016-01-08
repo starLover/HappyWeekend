@@ -18,6 +18,7 @@
 #import "HotViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <AFNetworking/AFHTTPSessionManager.h>
+#import "AppDelegate.h"
 
 @interface MainViewController ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *TableView;
@@ -62,6 +63,10 @@
     //启动定时器
     [self startTimer];
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.tabBarController.tabBar.hidden = NO;
+}
 #pragma mark -------  UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return self.listArray.count;
@@ -105,15 +110,18 @@
     return view;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    MainModel *mainModel = self.listArray[indexPath.section][indexPath.row];
     if (indexPath.section == 0) {
         UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         
         ActivityDetailViewController *activityVC = [storyBoard instantiateViewControllerWithIdentifier:@"activityDetail"];
-        MainModel *mainModel = self.listArray[indexPath.section][indexPath.row];
         activityVC.activityId = mainModel.activityId;
         [self.navigationController pushViewController:activityVC animated:YES];
     } else {
         ThemeViewController *themrVC = [[ThemeViewController alloc] init];
+        //当推出的时候隐藏
+//        themrVC.hidesBottomBarWhenPushed = YES;
+        themrVC.themeId = mainModel.activityId;
         [self.navigationController pushViewController:themrVC animated:YES];
     }
 }
@@ -149,7 +157,7 @@
     }
     self.pageControl.numberOfPages = self.adArray.count;
     [view addSubview:self.pageControl];
-  
+    
     
     //按钮
     for (int i = 0; i < 4; i++) {
@@ -171,9 +179,9 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html", nil];
     [manager GET:urlString parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
-//        NXXLog(@"%lld", downloadProgress.totalUnitCount);
+        //        NXXLog(@"%lld", downloadProgress.totalUnitCount);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        NXXLog(@"%@", responseObject);
+        //        NXXLog(@"%@", responseObject);
         NSDictionary *resultDic = responseObject;
         NSString *status = resultDic[@"status"];
         NSInteger code = [resultDic[@"code"] integerValue];
@@ -224,12 +232,16 @@
 }
 //每2秒执行一次,图片自动轮播
 - (void)rollAnimation{
-    //把page当前页加1
-    NSInteger page = (self.pageControl.currentPage + 1) % self.adArray.count;
-    self.pageControl.currentPage = page;
-    //计算出scrollView应该滚动的x轴坐标
-    CGFloat offsetX = page * kScreenWidth;
-    [self.carouseView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+    //self.adArray.count数组元素个数可能为0,当对0取于的时候没有意义
+    if (self.adArray.count > 0) {
+        //把page当前页加1
+        NSInteger page = (self.pageControl.currentPage + 1) % self.adArray.count;
+        self.pageControl.currentPage = page;
+        //计算出scrollView应该滚动的x轴坐标
+        CGFloat offsetX = page * kScreenWidth;
+        [self.carouseView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
+        
+    }
 }
 //当手动滑动scrollView的时候,定时器依然在计算时间,可能我们刚刚滑动到下一页,定时器时间刚好有触发,导致在当前页停留的时间不够2秒
 //解决方案  在scrollView开始移动的时候结束定时器
@@ -263,12 +275,13 @@
     if ([type integerValue] == 1) {
         UIStoryboard *mainStoryBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         ActivityDetailViewController *activityVC = [mainStoryBoard instantiateViewControllerWithIdentifier:@"activityDetail"];
-        
+        //活动id
         activityVC.activityId = self.adArray[adButton.tag - 100][@"id"];
         [self.navigationController pushViewController:activityVC animated:YES];
     } else {
-        HotViewController *hotVC = [[HotViewController alloc] init];
-        [self.navigationController pushViewController:hotVC animated:YES];
+        ThemeViewController *themeVC = [[ThemeViewController alloc] init];
+        themeVC.themeId = self.adArray[adButton.tag - 100][@"id"];
+        [self.navigationController pushViewController:themeVC animated:YES];
     }
 }
 

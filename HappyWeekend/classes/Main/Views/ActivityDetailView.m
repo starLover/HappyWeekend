@@ -93,7 +93,7 @@
 
 
 - (void)awakeFromNib{
-    self.mainScrollView.contentSize = CGSizeMake(0, PreviousImageBottom + 64);
+    self.mainScrollView.contentSize = CGSizeMake(0, PreviousImageBottom + 20);
 }
 
 /*

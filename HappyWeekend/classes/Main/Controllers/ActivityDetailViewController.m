@@ -27,6 +27,8 @@
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"活动详情";
     [self showBackButton];
+    //隐藏tabBar
+    self.tabBarController.tabBar.hidden = YES;
     [self getModel];
     
     //去地图页面

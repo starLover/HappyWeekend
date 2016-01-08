@@ -13,4 +13,5 @@
 //活动详情接口
 #define kActicityDetail @"http://e.kumi.cn/app/articleinfo.php?_s_=6055add057b829033bb586a3e00c5e9a&_t_=1452071715&channelid=appstore&cityid=1&lat=34.61356779156581&lng=112.4141403843618"
 
+#define KActivityTheme @"http://e.kumi.cn/app/positioninfo.php?_s_=1b2f0563dade7abdfdb4b7caa5b36110&_t_=1452218405&channelid=appstore&cityid=1&id=%@&lat=34.61349052974207&limit=30&lng=112.4139739846577&page=1"
 #endif /* HWDefine_h */
