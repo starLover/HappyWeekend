@@ -60,6 +60,7 @@
 //tableView上拉加载开始的时候使用
 - (void)pullingTableViewDidStartLoading:(PullingRefreshTableView *)tableView{
     _pageCount += 1;
+    self.refreshing = NO;
     [self performSelector:@selector(loadData) withObject:nil afterDelay:1.0];
 }
 //刷新完成时间
@@ -73,6 +74,11 @@
         NSDictionary *dic = responseObject;
         NSString *status = dic[@"status"];
         NSInteger code = [dic[@"code"] integerValue];
+        if (self.refreshing) {
+            if (self.acArray.count > 0) {
+                [self.acArray removeAllObjects];
+            }
+        }
         if ([status isEqualToString:@"success"] && code == 0) {
             NSDictionary *successDic = dic[@"success"];
             NSArray *array = successDic[@"rcData"];

@@ -638,6 +638,7 @@
 			baseConfigurationReference = FF363D206A1403AD5B45B005 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = /Users/bluesky/Desktop/HappyWeekend/HappyWeekend/Library/HWBtools/Define.pch;
 				INFOPLIST_FILE = HappyWeekend/Info.plist;
@@ -653,6 +654,7 @@
 			baseConfigurationReference = 6F74FF11D10DDC75FB59D9D5 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = /Users/bluesky/Desktop/HappyWeekend/HappyWeekend/Library/HWBtools/Define.pch;
 				INFOPLIST_FILE = HappyWeekend/Info.plist;

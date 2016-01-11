@@ -332,7 +332,7 @@
 - (UIButton *)themeBtn{
     if (_themeBtn == nil) {
         self.themeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.themeBtn.frame = CGRectMake(kScreenWidth / 2, 186, kScreenWidth / 2, 343 - 186 + kScreenWidth / 4);
+        self.themeBtn.frame = CGRectMake(kScreenWidth / 2, 186 + kScreenWidth / 4, kScreenWidth / 2, 343 - 186 - kScreenWidth / 4);
         [self.themeBtn setImage:[UIImage imageNamed:@"home_zhuanti@2x(1)"] forState:UIControlStateNormal];
         self.themeBtn.tag = 105;
         [self.themeBtn addTarget:self action:@selector(hotActivityButton) forControlEvents:UIControlEventTouchUpInside];
@@ -342,7 +342,7 @@
 - (UIButton *)activityBtn{
     if (_activityBtn == nil) {
         self.activityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.activityBtn.frame = CGRectMake(0, 186, kScreenWidth / 2, 343 - 186 + kScreenWidth / 4);
+        self.activityBtn.frame = CGRectMake(0, 186 + kScreenWidth / 4, kScreenWidth / 2, 343 - 186 - kScreenWidth / 4);
         [self.activityBtn setImage:[UIImage imageNamed:@"home_huodong@2x(1)"] forState:UIControlStateNormal];
         self.activityBtn.tag = 104;
         [self.activityBtn addTarget:self action:@selector(goodActivityButton) forControlEvents:UIControlEventTouchUpInside];

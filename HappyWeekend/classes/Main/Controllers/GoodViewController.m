@@ -62,6 +62,7 @@
 //tableView上拉加载开始的时候使用
 - (void)pullingTableViewDidStartLoading:(PullingRefreshTableView *)tableView{
     _pageCount += 1;
+    self.refreshing = NO;
     [self performSelector:@selector(loadData) withObject:nil afterDelay:1.0];
 }
 //刷新完成时间
@@ -78,9 +79,16 @@
         if ([status isEqualToString:@"success"] && code == 0) {
             NSDictionary *successDic = dic[@"success"];
             NSArray *array = successDic[@"acData"];
+            if (self.refreshing) {
+                //下拉刷新的时候需要移除数组中的元素
+                if (self.acArray.count > 0) {
+                    [self.acArray removeAllObjects];
+                }
+            }
             for (NSDictionary *dic in array) {
                 [self.acArray addObject:[[GoodModel alloc] initWithDicticionary:dic]];
             }
+            //刷新tableView,他会重新执行tableView的所有代理方法
             [self.tableView reloadData];
         }
     } failure:nil];

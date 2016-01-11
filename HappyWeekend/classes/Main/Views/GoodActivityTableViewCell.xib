@@ -61,7 +61,7 @@
                 <outlet property="headImageView" destination="Cmq-0o-Qr2" id="LK0-Ai-sLW"/>
                 <outlet property="loveCountButton" destination="rqW-T2-YOy" id="Q3n-4S-v4w"/>
             </connections>
-            <point key="canvasLocation" x="639.5" y="453"/>
+            <point key="canvasLocation" x="729.5" y="456"/>
         </tableViewCell>
     </objects>
     <resources>
