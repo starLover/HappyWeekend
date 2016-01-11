@@ -59,7 +59,7 @@
     [self.TableView registerNib:[UINib nibWithNibName:@"MainTableViewCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     [self configTableViewHeadView];
     //网络请求
-    [self request];
+//    [self request];
     //启动定时器
     [self startTimer];
 }
@@ -67,6 +67,7 @@
     [super viewWillAppear:animated];
     self.navigationController.tabBarController.tabBar.hidden = NO;
 }
+
 #pragma mark -------  UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return self.listArray.count;
@@ -243,6 +244,7 @@
         
     }
 }
+
 //当手动滑动scrollView的时候,定时器依然在计算时间,可能我们刚刚滑动到下一页,定时器时间刚好有触发,导致在当前页停留的时间不够2秒
 //解决方案  在scrollView开始移动的时候结束定时器
 //在scrollView移动完毕的时候再启动定时器

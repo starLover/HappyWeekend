@@ -20,7 +20,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="￥" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vcx-kO-2wz">
                         <rect key="frame" x="31" y="166" width="162" height="32"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.34999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1225456465899" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIZ-dg-h6d">
@@ -44,7 +44,7 @@
                 <outlet property="activityNameLabel" destination="SIZ-dg-h6d" id="fPO-tv-rq2"/>
                 <outlet property="activityPriceLabel" destination="Vcx-kO-2wz" id="nFV-F2-3KA"/>
             </connections>
-            <point key="canvasLocation" x="610.5" y="460.5"/>
+            <point key="canvasLocation" x="618.5" y="461.5"/>
         </tableViewCell>
     </objects>
     <resources>

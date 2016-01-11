@@ -1,14 +1,13 @@
 //
-//  ActivityThemeView.h
+//  HotActivityTableViewCell.h
 //  HappyWeekend
 //
-//  Created by wanghongxiao on 16/1/8.
+//  Created by wanghongxiao on 16/1/9.
 //  Copyright © 2016年 聂欣欣. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface ActivityThemeView : UIView
+@interface HotActivityTableViewCell : UITableViewCell
 @property(nonatomic, strong) NSDictionary *dataDic;
-@property(nonatomic, copy) NSString *title;
 @end
