@@ -70,23 +70,23 @@
         [self.mainScrollView addSubview:label];
         
         PreviousImageBottom += height + 10;
-
+        
         NSArray *urlArray = dic[@"urls"];
-//        if (urlArray == nil) {
-//            //当某一个段落中没有图片的时候,上次图片的高度用上次label的底部高度+10
-//            PreviousImageBottom = label.bottom + 10;
-//        } else {
-            for (NSDictionary *dic in urlArray) {
-                CGFloat width = [dic[@"width"] integerValue];
-                CGFloat imageHeight = [dic[@"height"] integerValue];
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, PreviousImageBottom, kScreenWidth - 20, (kScreenWidth - 20) / width * imageHeight)];
-                [imageView sd_setImageWithURL:[NSURL URLWithString:dic[@"url"]] placeholderImage:nil];
-                [self.mainScrollView addSubview:imageView];
-                //每次都保留最新的图片底部高度
-                PreviousImageBottom = imageView.bottom + 10;
-            }
+        //        if (urlArray == nil) {
+        //            //当某一个段落中没有图片的时候,上次图片的高度用上次label的底部高度+10
+        //            PreviousImageBottom = label.bottom + 10;
+        //        } else {
+        for (NSDictionary *dic in urlArray) {
+            CGFloat width = [dic[@"width"] integerValue];
+            CGFloat imageHeight = [dic[@"height"] integerValue];
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, PreviousImageBottom, kScreenWidth - 20, (kScreenWidth - 20) / width * imageHeight)];
+            [imageView sd_setImageWithURL:[NSURL URLWithString:dic[@"url"]] placeholderImage:nil];
+            [self.mainScrollView addSubview:imageView];
+            //每次都保留最新的图片底部高度
+            PreviousImageBottom = imageView.bottom + 10;
         }
-//    }
+    }
+    //    }
     [self awakeFromNib];
 }
 

@@ -38,7 +38,9 @@
     [self drawContentWithArray:dataDic[@"content"]];
 }
 - (void)drawContentWithArray:(NSArray *)contentArray{
-    PreviousImageBottom = 186;
+    if (self.headImageView) {
+        PreviousImageBottom = 186;
+    }
     for (NSDictionary *dic in contentArray) {
         //如果标题存在,标题的高度应该是上次图片底部的高度
         NSString *title = dic[@"title"];

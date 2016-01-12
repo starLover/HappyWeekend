@@ -31,9 +31,10 @@
     self.navigationItem.title = @"热门专题";
     [self showBackButton];
     [self.view addSubview:self.tableView];
+    self.tabBarController.tabBar.hidden = YES;
     self.tableView.rowHeight = 190;
     [self.tableView registerNib:[UINib nibWithNibName:@"HotActivityTableViewCell" bundle:nil] forCellReuseIdentifier:@"cell"];
-    [self loadData];
+    [self.tableView launchRefreshing];
 }
 #pragma mark      --------TableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

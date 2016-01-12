@@ -8,7 +8,6 @@
 
 #import "ActivityDetailViewController.h"
 #import <AFNetworking/AFHTTPSessionManager.h>
-#import <MBProgressHUD/MBProgressHUD.h>
 #import "UIViewController+Common.h"
 #import "ActivityDetailView.h"
 
@@ -40,11 +39,9 @@
 - (void)getModel{
     AFHTTPSessionManager *sessionManager = [AFHTTPSessionManager manager];
     sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [sessionManager GET:[NSString stringWithFormat:@"%@&id=%@", kActicityDetail, self.activityId] parameters:nil progress:^(NSProgress * _Nonnull downloadProgress) {
         NSLog(@"%@", downloadProgress);
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         
         NSDictionary *dic = responseObject;
         NSString *status = dic[@"status"];
@@ -55,7 +52,6 @@
             phoneNumber = successDic[@"tel"];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         NXXLog(@"%@", error);
     }];
 }

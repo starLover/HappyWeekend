@@ -27,7 +27,7 @@
                 <outlet property="headImageView" destination="1Sc-GY-d7d" id="ZCQ-2E-FMK"/>
                 <outlet property="loveCountBtn" destination="yTc-pH-KcN" id="4tc-oa-Gqk"/>
             </connections>
-            <point key="canvasLocation" x="770.5" y="380"/>
+            <point key="canvasLocation" x="1092.5" y="378"/>
         </tableViewCell>
     </objects>
 </document>

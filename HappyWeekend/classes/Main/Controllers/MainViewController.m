@@ -257,7 +257,9 @@
 }
 //分类列表
 - (void)mainActivityButtonAction:(UIButton *)btn{
+
     ClassifyViewController *classify = [[ClassifyViewController alloc] init];
+    classify.classifyListType = btn.tag - 100 + 1;
     [self.navigationController pushViewController:classify animated:YES];
 }
 //精选活动
