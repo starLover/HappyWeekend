@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="m8O-iv-mf8">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <scenes>
+        <!--登陆-->
+        <scene sceneID="2OC-Bz-Kj6">
+            <objects>
+                <viewController id="jPk-4p-Vcx" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="17c-6n-sCX"/>
+                        <viewControllerLayoutGuide type="bottom" id="Xfj-gE-std"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vGQ-gE-Agh">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ldm-n0-I3N">
+                                <rect key="frame" x="116" y="144" width="60" height="30"/>
+                                <state key="normal" title="删除数据"/>
+                                <connections>
+                                    <action selector="deleteData:" destination="jPk-4p-Vcx" eventType="touchUpInside" id="iIn-ET-Fbw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Ne-Vb-eVB">
+                                <rect key="frame" x="116" y="213" width="60" height="30"/>
+                                <state key="normal" title="修改数据"/>
+                                <connections>
+                                    <action selector="modeifyData:" destination="jPk-4p-Vcx" eventType="touchUpInside" id="luc-uF-RvS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eE7-Zh-Ed0">
+                                <rect key="frame" x="116" y="279" width="60" height="30"/>
+                                <state key="normal" title="查询数据"/>
+                                <connections>
+                                    <action selector="QueryData:" destination="jPk-4p-Vcx" eventType="touchUpInside" id="RPE-pE-x4d"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cr3-Qw-fY5">
+                                <rect key="frame" x="116" y="65" width="60" height="30"/>
+                                <state key="normal" title="添加数据"/>
+                                <connections>
+                                    <action selector="addAction:" destination="jPk-4p-Vcx" eventType="touchUpInside" id="HlL-Yb-hm7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iGJ-Zl-0qx">
+                                <rect key="frame" x="104" y="353" width="108" height="30"/>
+                                <color key="backgroundColor" red="1" green="0.42966642129999999" blue="0.23581978100000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="打开网易新闻"/>
+                                <connections>
+                                    <action selector="openWY:" destination="jPk-4p-Vcx" eventType="touchUpInside" id="4pO-wl-cyE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="登陆" id="bXz-Eo-0ZE"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kFI-Dz-Roq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="628.5" y="276.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="yg9-ai-VXe">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="m8O-iv-mf8" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="B52-6E-v5R">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="jPk-4p-Vcx" kind="relationship" relationship="rootViewController" id="Vxg-xv-zR6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gc4-Se-ykU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="312.5" y="244.5"/>
+        </scene>
+    </scenes>
+</document>

@@ -17,12 +17,17 @@
 #import "HWTools.h"
 #import "UIView+UIViewExtension.h"
 
-
+#define defaultColor [UIColor colorWithRed:96 / 255.0 green:185 / 255.0 blue:191 / 255.0 alpha:1.0]
 #ifdef DEBUG
 #	define NXXLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 #else
 #	define NXXLog(...)
 #endif
+//微博分享
+#define kAppKey @"1633774796"
+#define kRedirectURI @"https://api.weibo.com/oauth2/default.html"
+
+#define kBmobKey @"4418291574c0cad2790e4064a924a913"
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 

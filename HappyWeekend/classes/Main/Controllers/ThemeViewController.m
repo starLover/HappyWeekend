@@ -27,7 +27,7 @@
     // Do any additional setup after loading the view.
     self.navigationItem.title = @"热门专题";
     self.tabBarController.tabBar.hidden = YES;
-    [self showBackButton];
+    [self showBackButtonWithImage:@"back"];
 }
 #pragma mark   -----------  CustomMethod
 - (void)getModel{

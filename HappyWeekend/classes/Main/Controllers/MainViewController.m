@@ -44,8 +44,18 @@
     // Do any additional setup after loading the view.
     //    self.automaticallyAdjustsScrollViewInsets = NO;
     //     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:96.0 / 255.0f green:185.0 / 255.0f blue:191.0 / 255.0f alpha:1.0];
+    if (self.address == nil) {
+        self.address = @"北京";
+    }
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.frame = CGRectMake(0, 0, 60, 44);
+    [leftBtn setTitle:self.address forState:UIControlStateNormal];
+    [leftBtn setImage:[UIImage imageNamed:@"btn_chengshi"] forState:UIControlStateNormal];
+    leftBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 10);
+    leftBtn.imageEdgeInsets = UIEdgeInsetsMake(0, leftBtn.frame.size.width - 25, 0, 0);
     
-    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"北京" style:UIBarButtonItemStylePlain target:self action:@selector(selectCityAction:)];
+    [leftBtn addTarget:self action:@selector(selectCityAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
     leftBarBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftBarBtn;
     //right
@@ -59,7 +69,7 @@
     [self.TableView registerNib:[UINib nibWithNibName:@"MainTableViewCell" bundle:nil] forCellReuseIdentifier:@"cell"];
     [self configTableViewHeadView];
     //网络请求
-//    [self request];
+    [self request];
     //启动定时器
     [self startTimer];
 }
@@ -131,7 +141,8 @@
 //选择城市
 - (void)selectCityAction:(UIBarButtonItem *)btn{
     SelectCityViewController *selectCityVC = [[SelectCityViewController alloc] init];
-    [self.navigationController presentViewController:selectCityVC animated:YES completion:nil];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:selectCityVC];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 //搜索关键字
 - (void)searchCityAction:(UIBarButtonItem *)btn{
@@ -257,7 +268,6 @@
 }
 //分类列表
 - (void)mainActivityButtonAction:(UIButton *)btn{
-
     ClassifyViewController *classify = [[ClassifyViewController alloc] init];
     classify.classifyListType = btn.tag - 100 + 1;
     [self.navigationController pushViewController:classify animated:YES];

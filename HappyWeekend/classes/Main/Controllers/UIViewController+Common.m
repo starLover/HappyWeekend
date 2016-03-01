@@ -10,10 +10,11 @@
 
 @implementation UIViewController (Common)
 //导航栏添加返回按钮
-- (void)showBackButton{
+- (void)showBackButtonWithImage:(NSString *)imageName{
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(0, 0, 44, 44);
-    [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+    backBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -10, 0, 10);
+    [backBtn setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
     self.navigationItem.leftBarButtonItem = leftBtn;

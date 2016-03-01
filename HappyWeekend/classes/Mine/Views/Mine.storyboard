@@ -16,14 +16,13 @@
                     <view key="view" contentMode="scaleToFill" id="W7g-8v-7zD">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.47382001569999999" green="1" blue="0.15222947940000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="我的" id="Ky0-Wm-zIV"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T1A-T3-LP6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1437.5" y="193.5"/>
+            <point key="canvasLocation" x="892.5" y="203.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BdF-4V-zwn">
@@ -42,7 +41,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="amC-yr-S2a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1083.5" y="193.5"/>
+            <point key="canvasLocation" x="686.5" y="195.5"/>
         </scene>
     </scenes>
 </document>
