@@ -11,6 +11,7 @@
 #import <AFNetworking/AFHTTPSessionManager.h>
 #import "ProgressHUD.h"
 
+
 static NSString *itemIdentifier = @"itemIdentifier";
 static NSString *headIdentifier = @"headIdentifier";
 
@@ -18,8 +19,9 @@ static NSString *headIdentifier = @"headIdentifier";
 UICollectionViewDelegate,
 UICollectionViewDataSource,
 UICollectionViewDelegateFlowLayout>
-@property(nonatomic, retain) UICollectionView *collectionView;
+@property(nonatomic, strong) UICollectionView *collectionView;
 @property(nonatomic, retain) NSMutableArray *cityListArray;
+@property(nonatomic, retain) headerView *headView;
 @end
 
 @implementation SelectCityViewController
@@ -80,10 +82,17 @@ UICollectionViewDelegateFlowLayout>
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     UICollectionReusableView *reusableView = nil;
     if (kind == UICollectionElementKindSectionHeader) {
-        headerView *headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headIdentifier forIndexPath:indexPath];
-        reusableView = headView;
+        self.headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headIdentifier forIndexPath:indexPath];
+        self.headView.cityName = self.city;
+        reusableView = self.headView;
     }
     return reusableView;
+}
+//选择
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    self.headView.cityName = self.cityListArray[indexPath.row];
+    [self.delegate changeCity:self.cityListArray[indexPath.row]];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 #pragma mark   --------   Lazyloading
 - (UICollectionView *)collectionView{
@@ -121,6 +130,7 @@ UICollectionViewDelegateFlowLayout>
     }
     return _cityListArray;
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

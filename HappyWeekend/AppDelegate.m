@@ -117,8 +117,6 @@
     
     [_geocoder reverseGeocodeLocation:location completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
         CLPlacemark *placeMark = [placemarks lastObject];
-        _mainV.address = placeMark.locality;
-        NSLog(@"%@", _mainV.address);
         NSLog(@"%@", placeMark.addressDictionary);
     }];
     //如果不需要使用定位服务的时候,及时关闭定位服务

@@ -20,7 +20,7 @@
 #import <AFNetworking/AFHTTPSessionManager.h>
 #import "AppDelegate.h"
 
-@interface MainViewController ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface MainViewController ()<UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, changeCity>
 @property (strong, nonatomic) IBOutlet UITableView *TableView;
 //全部列表数据
 @property(nonatomic, strong) NSMutableArray *listArray;
@@ -33,8 +33,10 @@
 @property(nonatomic, strong) UIPageControl *pageControl;
 @property(nonatomic, strong) UIButton *activityBtn;
 @property(nonatomic, strong) UIButton *themeBtn;
+@property(nonatomic, strong) UIButton *leftBtn;
 //定时器用于图片滚动播放
 @property(nonatomic, strong) NSTimer *timer;
+
 @end
 
 @implementation MainViewController
@@ -44,18 +46,16 @@
     // Do any additional setup after loading the view.
     //    self.automaticallyAdjustsScrollViewInsets = NO;
     //     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:96.0 / 255.0f green:185.0 / 255.0f blue:191.0 / 255.0f alpha:1.0];
-    if (self.address == nil) {
-        self.address = @"北京";
-    }
-    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.frame = CGRectMake(0, 0, 60, 44);
-    [leftBtn setTitle:self.address forState:UIControlStateNormal];
-    [leftBtn setImage:[UIImage imageNamed:@"btn_chengshi"] forState:UIControlStateNormal];
-    leftBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 10);
-    leftBtn.imageEdgeInsets = UIEdgeInsetsMake(0, leftBtn.frame.size.width - 25, 0, 0);
+
+    self.leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.leftBtn.frame = CGRectMake(0, 0, 60, 44);
+    [self.leftBtn setTitle:@"北京" forState:UIControlStateNormal];
+    [self.leftBtn setImage:[UIImage imageNamed:@"btn_chengshi"] forState:UIControlStateNormal];
+    self.leftBtn.titleEdgeInsets = UIEdgeInsetsMake(0, -30, 0, 10);
+    self.leftBtn.imageEdgeInsets = UIEdgeInsetsMake(0, self.leftBtn.frame.size.width - 25, 0, 0);
     
-    [leftBtn addTarget:self action:@selector(selectCityAction:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    [self.leftBtn addTarget:self action:@selector(selectCityAction:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftBarBtn = [[UIBarButtonItem alloc] initWithCustomView:self.leftBtn];
     leftBarBtn.tintColor = [UIColor whiteColor];
     self.navigationItem.leftBarButtonItem = leftBarBtn;
     //right
@@ -141,9 +141,15 @@
 //选择城市
 - (void)selectCityAction:(UIBarButtonItem *)btn{
     SelectCityViewController *selectCityVC = [[SelectCityViewController alloc] init];
+    selectCityVC.delegate = self;
+    selectCityVC.city = self.leftBtn.titleLabel.text;
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:selectCityVC];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
+- (void)changeCity:(NSString *)cityName{
+    [self.leftBtn setTitle:cityName forState:UIControlStateNormal];
+}
+
 //搜索关键字
 - (void)searchCityAction:(UIBarButtonItem *)btn{
     SearchViewController *searchVC = [[SearchViewController alloc] init];
@@ -370,6 +376,7 @@
     }
     return _pageControl;
 }
+
 
 #pragma mark  -------  首页轮播图
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{

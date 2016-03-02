@@ -8,15 +8,13 @@
 
 #import "headerView.h"
 
-@implementation headerView
-- (instancetype)init{
-    self = [super init];
-    if (self) {
-        [self configView];
-    }
-    return self;
-}
-- (void)configView{
+@interface headerView ()
+@property (strong, nonatomic) IBOutlet UILabel *locationLabel;
 
+@end
+@implementation headerView
+- (void)setCityName:(NSString *)cityName{
+    self.locationLabel.text = cityName;
 }
+
 @end

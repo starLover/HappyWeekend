@@ -9,5 +9,4 @@
 #import <UIKit/UIKit.h>
 
 @interface MainViewController : UIViewController
-@property(nonatomic, copy) NSString *address;
 @end

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface headerView : UICollectionReusableView
-
+@property(nonatomic, copy) NSString *cityName;
 @end

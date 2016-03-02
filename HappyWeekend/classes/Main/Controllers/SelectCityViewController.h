@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SelectCityViewController : UIViewController
+@protocol changeCity <NSObject>
 
+- (void)changeCity:(NSString *)cityName;
+
+@end
+
+@interface SelectCityViewController : UIViewController
+@property(nonatomic, copy) NSString *city;
+@property(nonatomic, assign) id<changeCity>delegate;
 @end
